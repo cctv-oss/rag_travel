@@ -13,3 +13,5 @@ chroma/
 .DS_Store
 .vscode/
 .idea/
+chat_history/
+md5.text
