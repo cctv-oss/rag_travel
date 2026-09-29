@@ -4,7 +4,6 @@ from fastapi import FastAPI , UploadFile , File
 from knowledge_base import KnowledgeBaseService
 from pydantic import BaseModel
 from rag import RagService
-import config_data as config
 
 app = FastAPI()
 rag = RagService()
@@ -23,8 +22,9 @@ class ChatRequest(BaseModel):
 
 @app.post("/chat")
 async def chat(body: ChatRequest):
+    session_config = {"configurable": {"session_id": body.session_id}}
     def generate():
-        for chunk in rag.chain.stream({"input": body.message},config.session_config):
+        for chunk in rag.chain.stream({"input": body.message},session_config):
             yield chunk
     return StreamingResponse(generate(), media_type="text/plain")
 

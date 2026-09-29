@@ -5,3 +5,6 @@ dashscope
 streamlit
 fastapi
 uvicorn
+rank_bm25
+jieba
+sentence-transformers

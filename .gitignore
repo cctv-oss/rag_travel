@@ -8,6 +8,7 @@ venv/
 .venv/
 data/*.pdf
 data/*.docx
+data/raw_chunks.jsonl
 chroma/
 *.log
 .DS_Store

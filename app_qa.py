@@ -1,7 +1,6 @@
 
 import streamlit as st
 from rag import RagService
-import config_data as config
 st.title("智能旅行助手")
 st.divider()
 
@@ -30,7 +29,7 @@ if prompt:
 
     ai_res_list = []
     with st.spinner("AI思考中..."):
-        res_stream = st.session_state["rag"].chain.stream({"input":prompt},config.session_config)
+        res_stream = st.session_state["rag"].chain.stream({"input":prompt},{"configurable":{"session_id":"streamlit_user"}})
 
         def capture(generator,cache_list):
             for chunk in generator:

@@ -1,3 +1,5 @@
+import os # ⚠️必须放在所有import最前面!!hf镜像配置
+os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
 from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser

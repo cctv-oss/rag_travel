@@ -1,7 +1,7 @@
 '''
 知识库
 '''
-import os
+import os,json
 from langchain_chroma import Chroma
 import hashlib
 
@@ -42,8 +42,8 @@ class KnowledgeBaseService(object):
         #文件不存在则创建,存在则跳过
         os.makedirs(config.persist_directory, exist_ok=True)
         self.chroma = Chroma(
-            collection_name= config.cllection_name,
-            embedding_function= DashScopeEmbeddings(model = config.EmneddingModel),
+            collection_name= config.collection_name,
+            embedding_function= DashScopeEmbeddings(model = config.embedding_model_name),
             persist_directory= config.persist_directory,
             collection_metadata={"hnsw:space": config.collection_metadata}
         )
@@ -73,11 +73,16 @@ class KnowledgeBaseService(object):
 
         self.chroma.add_texts(         #将内容加载到向量库中
             knowledge_chunks,
-            metadata=[metadata for _ in knowledge_chunks],
+            metadatas=[metadata for _ in knowledge_chunks],
         )
+        #新增:chunks纯文本同步写入语料文件(BM25检索用),带来源信息
+        with open(config.raw_text_path,"a",encoding="utf-8") as f:
+            for chunk in knowledge_chunks:
+                f.write(json.dumps({"text": chunk, "source": filename}, ensure_ascii=False)+"\n")
 
         save_md5(md5_hex)
         return"[成功]内容已加载到数据库中"
+
 
 if __name__ == "__main__":
     service = KnowledgeBaseService()

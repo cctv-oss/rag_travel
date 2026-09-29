@@ -1,5 +1,4 @@
 
-import time
 import streamlit as st
 from knowledge_base import KnowledgeBaseService
 from config_data import supported_file_type_desc,supported_file_type
@@ -25,8 +24,7 @@ if uploader_file is not None and len(uploader_file) > 0:
 #get_value->bytes->decode(utf-8)
         text = single_file.getvalue().decode("utf-8", errors="ignore")
 
-        with st.spinner("载入知识库中..."): #代码执行过程中增加转圈动画
-            time.sleep(1)  #转圈动画最少时间  /秒
+        with st.spinner("载入知识库中..."):
             result = st.session_state["service"].upload_by_str(text,file_name)
             st.write(result)
 
