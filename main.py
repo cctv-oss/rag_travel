@@ -1,3 +1,6 @@
+import os
+os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"  # 必须放在所有import之前,否则hf镜像不生效
+
 from typing import Annotated
 from fastapi.responses import StreamingResponse
 from fastapi import FastAPI , UploadFile , File

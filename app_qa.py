@@ -1,4 +1,7 @@
 
+import os
+os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"  # 必须放在所有import之前,否则hf镜像不生效
+
 import streamlit as st
 from rag import RagService
 st.title("智能旅行助手")
